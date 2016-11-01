@@ -22,15 +22,24 @@ function clean()
   rm(ephemera;force=true, recursive=true)
 end
 
-"""scaffolding: Inefficiently, redundantly, brute forces its ways to a working installation
+"----------------------------------------------------"
 
-TODO: Make this modular, and steps idempotent, and redundancy checks quick
+"Prelude"
+⇶(xs,f) = [f(x) for x=xs]
+
+"----------------------------------------------------"
+
+
+"""
+bootboot: Inefficiently, redundantly, brute forces its ways to a working installation
+<scaffolding: Make this modular, and steps idempotent, and redundancy checks quick>
 """
 function bootboot()
   mkpath(ephemera)
 
-  url(fork) = "https://github.com/lilinjn/$(fork[:repo])"
-  local_path(fork) = joinpath(ephemera,"repos",fork[:repo])
+  repo_str(fork) = "$(fork[:repo]).jl"
+  url(fork) = "https://github.com/lilinjn/$(repo_str(fork))"
+  local_path(fork) = joinpath(ephemera,"repos",repo_str(fork))
   runf(fork, cmd) = run(Cmd(cmd,dir=local_path(fork)))
 
   #shell out to git; Boycott LibGit2.jl for hardcoding Github specific behavior
@@ -42,11 +51,10 @@ function bootboot()
   end
 
   build_config()
-  print_with_color(:yellow, "Creating/Updating forks...\n")
-  for f = config[:forks]
-    retrieve(f)
-  end
+  print_with_color(:yellow, "Retrieving forks...\n")
+  config[:forks]  ⇶ retrieve
 
+  nothing
 end
 
 function build_config()
@@ -54,8 +62,18 @@ function build_config()
   #technically, should be commit-ish, but that term is artless
   fork(repo, treeish="master") = Dict(:repo=>repo, :treeish=>treeish)
 
-  config[:forks] = [fork("Conda.jl"), fork("IJulia.jl")]
+  config[:forks] = [:Conda, :IJulia] ⇶ fork
   config
 end
 
 end
+
+
+
+
+
+
+"""
+Cleanup:
+   * printing
+"""
