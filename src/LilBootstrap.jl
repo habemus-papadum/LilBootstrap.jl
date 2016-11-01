@@ -17,6 +17,22 @@ though those concepts are not really well defined in this context.  Reading
 the code will provide a better gist of what this might actually mean.
 """
 config = Dict()
+config[:forks] = [  (:Conda,     "master"),
+                    (:PyCall,    "master"),
+                    (:PyPlot,    "master"),
+                    (:IJulia,    "master"),
+                    (:NBInclude, "master"),
+                    (:JSON,      "master"),
+                    (:ZMQ,       "master"),
+                    (:Compat,    "master")]
+config[:conda] = [  (:zeromq,    v"4.1.3"),
+                    (:jupyter,   v"1.0.0"),
+                    (:pil,       v"1.1.7"),
+                    (:matplotlib,v"1.5.3"),]
+  #conda:zeromq                    4.1.3, 1.0.0
+  # jupyter 1.0.0
+  # pil pil:      1.1.7-py27_2
+  # 1.5.3-np111py27_1
 
 
 "Remove all traces of this instance of LilBootstrap"
@@ -73,38 +89,22 @@ function bootboot()
   print_with_color(:yellow, "Retrieving forks...\n")
   config[:forks]  ⇶ retrieve
 
+
   nothing
 end
 
-function build_config()
+function condaboot()
+  conda(package, version, channel=:anaconda) = begin
+    Conda.add("$(package)=$(version)")
+  end
 
-  # when things stabilize it will look like:  (:Conda,"243b09f")
-  config[:forks] = [(:Conda,     "master"),
-                    (:PyCall,    "master"),
-                    (:PyPlot,    "master"),
-                    (:IJulia,    "master"),
-                    (:NBInclude, "master"),
-                    (:JSON,      "master"),
-                    (:ZMQ,       "master"),
-                    (:Compat,    "master")]
+  print_with_color(:yellow, "Updating Conda...\n")
+  config[:conda]  ⇶ conda
 
-  #conda:zeromq                    4.1.3, 1.0.0
-  # jupyter 1.0.0
-  # pil pil:      1.1.7-py27_2
-  # 1.5.3-np111py27_1
 end
 
-
-
-#-----------------Main Setup------------------
-build_config()
-bootboot() # relies on precompilation to smartly update when necessary
-
-
-#-----------------------------------------------
-
-function __init__()
-
+function launch()
+  global dot_julia
   # all hell breaks loose now
   push!(LOAD_PATH, Pkg.dir()) #allow access to Pkgs from the host julia (I will regret this)
   ENV["JULIA_PKGDIR"]=dot_julia
@@ -133,6 +133,20 @@ function __init__()
   And I very much like the idea of letting myself shoot my own foot off -- Now that is a good design!
   =#
 
+end
+
+
+#-----------------Main Setup------------------
+# relies on precompilation to smartly update when necessary
+launch()
+bootboot()
+import Conda
+condaboot()
+
+#-----------------------------------------------
+
+function __init__()
+  launch()
 end
 
 end
