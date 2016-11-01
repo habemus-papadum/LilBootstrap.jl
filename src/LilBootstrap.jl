@@ -32,7 +32,8 @@ end
 #----------------------------------------------------
 
 "Prelude"
-⇶(xs,f) = [f(x) for x=xs]
+⇶(xs,f) = [f(x...) for x=xs]
+
 
 #----------------------------------------------------
 
@@ -47,16 +48,19 @@ function bootboot()
   mkpath(joinpath(dot_julia,version_dir))
   mkpath(conda_dir)
 
-  repo_str(fork) = "$(fork[:repo]).jl"
-  url(fork) = "https://github.com/lilinjn/$(repo_str(fork))"
-  local_path(fork) = joinpath(local_repos,string(fork[:repo]))
-  pkg_path(fork) = joinpath(dot_julia, version_dir,string(fork[:repo]))
-  runf(fork, cmd) = run(Cmd(cmd,dir=local_path(fork)))
-  #shell out to git; Boycott LibGit2.jl for hardcoding Github specific behavior
-  retrieve(fork) = begin
+  # todo: smarter up to date check
+  retrieve(fork, version) = begin
+    repo_str(fork) = "$(fork).jl"
+    url(fork) = "https://github.com/lilinjn/$(repo_str(fork))"
+    local_path(fork) = joinpath(local_repos,string(fork))
+    pkg_path(fork) = joinpath(dot_julia, version_dir,string(fork))
+
+    #shell out to git; Boycott LibGit2.jl for hardcoding Github specific behavior
+    runf(fork, cmd) = run(Cmd(cmd,dir=local_path(fork)))
+
     lp = local_path(fork)
-    print_with_color(:yellow, "$(fork[:repo])...\n")
-    ispath(lp) || run(`git clone -b $(fork[:treeish]) $(url(fork)) $(lp)`)
+    print_with_color(:yellow, "$(fork)...\n")
+    ispath(lp) || run(`git clone -b $(version) $(url(fork)) $(lp)`)
 
     runf(fork, `git pull`)
     pp = pkg_path(fork)
@@ -74,15 +78,31 @@ end
 
 function build_config()
 
-  #technically, should be commit-ish, but that term is artless
-  fork(repo, treeish="master") = Dict(:repo=>repo, :treeish=>treeish)
+  # when things stabilize it will look like:  (:Conda,"243b09f")
+  config[:forks] = [(:Conda,  "master"),
+                    (:PyCall, "master"),
+                    (:PyPlot, "master"),
+                    (:IJulia, "master"),
+                    (:JSON,   "master"),
+                    (:ZMQ,    "master"),
+                    (:Compat, "master")]
 
-  config[:forks] = [:Conda, :IJulia, :JSON, :ZMQ, :Compat] ⇶ fork
-  config
+  #conda:zeromq                    4.1.3, 1.0.0
+  # jupyter 1.0.0
+  # pil pil:      1.1.7-py27_2
+  # 1.5.3-np111py27_1
 end
 
+
+
+#-----------------Main Setup------------------
+build_config()
+bootboot() # relies on precompilation to smartly update when necessary
+
+
+#-----------------------------------------------
+
 function __init__()
-  build_config()
 
   # all hell breaks loose now
   push!(LOAD_PATH, Pkg.dir()) #allow access to Pkgs from the host julia (I will regret this)
@@ -119,4 +139,5 @@ end
 #=
 Cleanup:
    * printing
+   * pinning forks to specific versions
 =#
