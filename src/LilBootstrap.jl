@@ -8,7 +8,7 @@ const local_repos = joinpath(ephemera,"repos")
 const version_dir = "v$(Base.VERSION.major).$(Base.VERSION.minor)"
 const dot_julia = joinpath(ephemera,".julia")
 const compile_cache = joinpath(dot_julia, "lib",version_dir)
-
+const conda_dir = joinpath(ephemera,"conda")
 
 """A json-like store of config
 
@@ -45,6 +45,7 @@ function bootboot()
 
   #creates necessary directories
   mkpath(joinpath(dot_julia,version_dir))
+  mkpath(conda_dir)
 
   repo_str(fork) = "$(fork[:repo]).jl"
   url(fork) = "https://github.com/lilinjn/$(repo_str(fork))"
@@ -58,7 +59,9 @@ function bootboot()
     ispath(lp) || run(`git clone -b $(fork[:treeish]) $(url(fork)) $(lp)`)
 
     runf(fork, `git pull`)
-    symlink(lp, pkg_path(fork))
+    pp = pkg_path(fork)
+    rm(pp, force=true)
+    symlink(lp, pp)
 
     fork
   end
