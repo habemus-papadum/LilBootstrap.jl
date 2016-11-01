@@ -79,13 +79,14 @@ end
 function build_config()
 
   # when things stabilize it will look like:  (:Conda,"243b09f")
-  config[:forks] = [(:Conda,  "master"),
-                    (:PyCall, "master"),
-                    (:PyPlot, "master"),
-                    (:IJulia, "master"),
-                    (:JSON,   "master"),
-                    (:ZMQ,    "master"),
-                    (:Compat, "master")]
+  config[:forks] = [(:Conda,     "master"),
+                    (:PyCall,    "master"),
+                    (:PyPlot,    "master"),
+                    (:IJulia,    "master"),
+                    (:NBInclude, "master"),
+                    (:JSON,      "master"),
+                    (:ZMQ,       "master"),
+                    (:Compat,    "master")]
 
   #conda:zeromq                    4.1.3, 1.0.0
   # jupyter 1.0.0
