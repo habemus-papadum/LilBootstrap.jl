@@ -48,6 +48,7 @@ function bootboot()
     print_with_color(:yellow, "$(fork[:repo])...\n")
     ispath(lp) || run(`git clone -b $(fork[:treeish]) $(url(fork)) $(lp)`)
     runf(fork, `git pull`)
+    fork
   end
 
   build_config()
