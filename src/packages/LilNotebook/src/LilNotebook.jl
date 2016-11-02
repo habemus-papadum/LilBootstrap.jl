@@ -30,7 +30,7 @@ module LilNotebook
   run(`$(IJulia.jupyter) nbextensions_configurator enable --sys-prefix`)
 
   function remote_headless(; dir=pwd(), )
-    notebook(dir=dir, detached=detached, ifc="0.0.0.0", no_browser=true)
+    notebook(dir=dir, ifc="0.0.0.0", no_browser=true)
   end
 
   function notebook(; dir=pwd(), ifc="localhost", no_browser=false)
