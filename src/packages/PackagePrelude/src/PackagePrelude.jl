@@ -33,8 +33,8 @@ Inefficiently, redundantly, brute forces its ways to a working installation
 
 TODO: Make this modular, and steps idempotent, and redundancy checks quick
 """
-ensure_fork(fork, version) = begin
-    repo_str(fork) = "$(fork).jl"
+ensure_fork(fork, version; julia=true) = begin
+    repo_str(fork) = julia ? "$(fork).jl" : string(fork)
     url(fork) = "https://github.com/lilinjn/$(repo_str(fork))"
     local_path(fork) = joinpath(local_repos,string(fork))
     pkg_path(fork) = joinpath(dot_julia, version_dir,string(fork))
@@ -47,10 +47,11 @@ ensure_fork(fork, version) = begin
     ispath(lp) || run(`git clone -b $(version) $(url(fork)) $(lp)`)
 
     runf(fork, `git pull`)
-    pp = pkg_path(fork)
-    rm(pp, force=true)
-    symlink(lp, pp)
-
+    if (julia)
+        pp = pkg_path(fork)
+        rm(pp, force=true)
+        symlink(lp, pp)
+    end
     fork
 end
 
