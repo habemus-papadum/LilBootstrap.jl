@@ -55,6 +55,51 @@ ensure_fork(fork, version) = begin
 end
 
 
+# lifted from https://github.com/JuliaLang/julia/blob/master/base/REPLCompletions.jl
+"Helper to check if a path location is a module; returns a symbol if so, and nothing otherwise"
+module_helper(dir, pname) = begin
+  (pname[1] == '.' || pname == "METADATA" || pname == "REQUIRE") && return nothing
+  mod_sym = Symbol(endswith(pname, ".jl") ?  pname[1:end - 3] : pname)
+  # Valid file paths are
+  #   <Mod>.jl
+  endswith(pname, ".jl") && isfile(joinpath(dir, pname)) && return mod_sym
+  #   <Mod>/src/<Mod>.jl
+  #   <Mod>.jl/src/<Mod>.jl
+  isfile(joinpath(dir, pname, "src", "$(mod_sym).jl")) &&  return mod_sym
+  return nothing
+end
+
+
+"List packages managed via LilBootstrap"
+list_packages(;embedded=true,forks=true) = begin
+  pkgs = []
+
+  process(dir) = begin
+    ns = [module_helper(dir,e) for e in readdir(dir)]
+    filter(n->n!=nothing, ns)
+  end
+
+  embedded && append!(pkgs, process(packages_dir))
+  forks && append!(pkgs, process(local_repos))
+
+  return pkgs |> unique |> sort
+end
+
+"""
+Locate a package in the LilBootstrap enviroment.  returns `nothing` if package is not found
+
+Emulates the behavior of `using` and may return items that are located out of tree
+"""
+function locate_package(pkg)
+  pkg=string(pkg)
+  for d in [Pkg.dir(); LOAD_PATH; pwd()]
+    isdir(d) || continue
+    (module_helper(d,pkg) != nothing) && return joinpath(d,pkg)
+    (module_helper(d,"$pkg.jl") != nothing) && return joinpath(d,pkg)
+  end
+  nothing
+end
+
 ## startup
 mkpath(joinpath(dot_julia,version_dir))
 mkpath(conda_dir)
