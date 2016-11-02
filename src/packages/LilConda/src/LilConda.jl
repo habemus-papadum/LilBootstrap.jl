@@ -7,7 +7,7 @@ module LilConda
   using Conda
   function ensure_conda(package, version, channel=:anaconda)
     pstr = "$(package)=$(version)"
-    Conda.exists(pstr) || Conda.add(pstr)
+    Conda.is_installed(package,version) || Conda.add(pstr)
   end
 
   ##bootstrap conda
