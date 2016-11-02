@@ -10,6 +10,9 @@ module LilConda
     Conda.is_installed(package,version) || Conda.add(pstr)
   end
 
+  function python_dir()=Conda.PYTHONDIR
+
   ##bootstrap conda
   Conda.add("zlib=1.2.8")
+
 end

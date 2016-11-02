@@ -8,7 +8,7 @@ module LilNotebook
   [  (:IJulia,    "master"),
      (:NBInclude, "master")] ⇶ ensure_fork
 
-  using Conda
+  using LilConda
   using IJulia
 
   ## add nb extensions
@@ -18,7 +18,7 @@ module LilNotebook
 
   ## install
   println("Install jupyter notebook extensions")
-  pip = joinpath(Conda.PYTHONDIR,"pip")
+  pip = joinpath(LilConda.python_dir(),"pip")
   run(`$pip --quiet install -e $nb_ext_dir`)
   run(`$(IJulia.jupyter) contrib nbextension install --sys-prefix --symlink`)
 
