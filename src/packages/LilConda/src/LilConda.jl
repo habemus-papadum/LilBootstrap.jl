@@ -9,4 +9,5 @@ module LilConda
     pstr = "$(package)=$(version)"
     Conda.exists(pstr) || Conda.add(pstr)
   end
+  ensure_conda("zlib", v"1.2.8")
 end
