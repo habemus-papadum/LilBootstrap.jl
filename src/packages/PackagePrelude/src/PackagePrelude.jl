@@ -13,12 +13,20 @@ const version_dir = "v$(Base.VERSION.major).$(Base.VERSION.minor)"
 const dot_julia = joinpath(ephemera,".julia")
 const compile_cache = joinpath(dot_julia, "lib",version_dir)
 const conda_dir = joinpath(ephemera,"conda")
+const conda_lib_dir = joinpath(conda_dir, "lib")
 const packages_dir = joinpath(base_dir,"src", "packages")
 
 
 
 # helpers
 ⇶(xs,f) = [f(x...) for x=xs]
+
+#break windows
+function libfile(name; ensure = true)
+  location = joinpath(conda_lib_dir, "lib$(name).$(Libdl.dlext)")
+  ensure && Base.Libdl.dlopen_e(location) == C_NULL && error("Missing shared library: $(location)")
+  location
+end
 
 """
 Inefficiently, redundantly, brute forces its ways to a working installation
