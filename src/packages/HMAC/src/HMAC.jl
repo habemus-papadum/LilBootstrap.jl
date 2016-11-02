@@ -1,9 +1,9 @@
-##  __precompile__()
+__precompile__()
 
 module HMAC
 
 using PackagePrelude: ensure_fork, ⇶
-#[  (:SHA,       "master")] ⇶ ensure_fork
+[  (:SHA,       "master")] ⇶ ensure_fork
 using SHA
 
 
