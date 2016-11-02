@@ -9,103 +9,14 @@ const version_dir = "v$(Base.VERSION.major).$(Base.VERSION.minor)"
 const dot_julia = joinpath(ephemera,".julia")
 const compile_cache = joinpath(dot_julia, "lib",version_dir)
 const conda_dir = joinpath(ephemera,"conda")
+const packages_dir = joinpath(base_dir,"src", "packages")
 
-"""A json-like store of config
-
-Semanticly this is to behave like compile-time config, as opposed to run-time,
-though those concepts are not really well defined in this context.  Reading
-the code will provide a better gist of what this might actually mean.
-"""
-config = Dict()
-config[:forks] = [  (:Conda,     "master"),
-                    (:PyCall,    "master"),
-                    (:PyPlot,    "master"),
-                    (:IJulia,    "master"),
-                    (:NBInclude, "master"),
-                    (:JSON,      "master"),
-                    (:ZMQ,       "master"),
-                    (:Compat,    "master")]
-config[:conda] = [  (:zeromq,    v"4.1.3"),
-                    (:jupyter,   v"1.0.0"),
-                    (:pil,       v"1.1.7"),
-                    (:matplotlib,v"1.5.3"),]
-  #conda:zeromq                    4.1.3, 1.0.0
-  # jupyter 1.0.0
-  # pil pil:      1.1.7-py27_2
-  # 1.5.3-np111py27_1
-
-
-"Remove all traces of this instance of LilBootstrap"
-function nuke()
-  rm(base_dir;force=true, recursive=true)
-end
-
-"Remove all ephemera created by this instance"
-function clean()
-  rm(ephemera;force=true, recursive=true)
-end
-
-#----------------------------------------------------
-
-"Prelude"
-⇶(xs,f) = [f(x...) for x=xs]
-
-
-#----------------------------------------------------
-
-
-"""
-bootboot: Inefficiently, redundantly, brute forces its ways to a working installation
-<scaffolding: Make this modular, and steps idempotent, and redundancy checks quick>
-"""
-function bootboot()
-
-  #creates necessary directories
-  mkpath(joinpath(dot_julia,version_dir))
-  mkpath(conda_dir)
-
-  # todo: smarter up to date check
-  retrieve(fork, version) = begin
-    repo_str(fork) = "$(fork).jl"
-    url(fork) = "https://github.com/lilinjn/$(repo_str(fork))"
-    local_path(fork) = joinpath(local_repos,string(fork))
-    pkg_path(fork) = joinpath(dot_julia, version_dir,string(fork))
-
-    #shell out to git; Boycott LibGit2.jl for hardcoding Github specific behavior
-    runf(fork, cmd) = run(Cmd(cmd,dir=local_path(fork)))
-
-    lp = local_path(fork)
-    print_with_color(:yellow, "$(fork)...\n")
-    ispath(lp) || run(`git clone -b $(version) $(url(fork)) $(lp)`)
-
-    runf(fork, `git pull`)
-    pp = pkg_path(fork)
-    rm(pp, force=true)
-    symlink(lp, pp)
-
-    fork
-  end
-
-  print_with_color(:yellow, "Retrieving forks...\n")
-  config[:forks]  ⇶ retrieve
-
-
-  nothing
-end
-
-function condaboot()
-  conda(package, version, channel=:anaconda) = begin
-    Conda.add("$(package)=$(version)")
-  end
-
-  print_with_color(:yellow, "Updating Conda...\n")
-  config[:conda]  ⇶ conda
-
-end
 
 function launch()
   global dot_julia
+  global packages_dir
   # all hell breaks loose now
+  push!(LOAD_PATH, packages_dir)
   push!(LOAD_PATH, Pkg.dir()) #allow access to Pkgs from the host julia (I will regret this)
   ENV["JULIA_PKGDIR"]=dot_julia
   prepend!(Base.LOAD_CACHE_PATH,[compile_cache])
@@ -136,13 +47,6 @@ function launch()
 end
 
 
-#-----------------Main Setup------------------
-# relies on precompilation to smartly update when necessary
-launch()
-bootboot()
-import Conda
-condaboot()
-
 #-----------------------------------------------
 
 function __init__()
@@ -150,9 +54,3 @@ function __init__()
 end
 
 end
-
-#=
-Cleanup:
-   * printing
-   * pinning forks to specific versions
-=#
