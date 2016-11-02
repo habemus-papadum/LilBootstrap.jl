@@ -15,3 +15,6 @@ This is achieved, in part, through reckless disfigurement and subversion of such
 ## _What's in it for you?..._
 ... not much, I'm afraid. But you are welcome to take as you like, all the same!
 
+-----------------------------
+
+[![Build Status](https://travis-ci.org/lilinjn/LilBootstrap.jl.svg?branch=master)](https://travis-ci.org/lilinjn/LilBootstrap.jl)
