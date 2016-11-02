@@ -34,7 +34,7 @@ function launch()
 
   But the whole point is that we are trying not use Pkg at all.
 
-  But there are times in which one finds themselves in a hacker fugue state, and just wants
+  But there are times in which one finds themselves in a [hacker fugue](http://www.ccs.neu.edu/home/shivers/pictures.html) state, and just wants
   to pull in code the quick and dirty way, rather than recommended "fork and hack" approach endorsed
   by LilBootstrap.
 
