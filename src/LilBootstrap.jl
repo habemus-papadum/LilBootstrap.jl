@@ -34,8 +34,8 @@ function launch()
 
   But the whole point is that we are trying not use Pkg at all.
 
-  But there are times in which one finds themselves in a [hacker fugue](http://www.ccs.neu.edu/home/shivers/pictures.html) state, and just wants
-  to pull in code the quick and dirty way, rather than recommended "fork and hack" approach endorsed
+  But there are times in which one finds themselves in a [hacker fugue](http://www.ccs.neu.edu/home/shivers/pictures.html) state,
+  and just wants  to pull in code the quick and dirty way, rather than recommended "fork and hack" approach endorsed
   by LilBootstrap.
 
   As a practical sanity check/speed bump, any initial Pkg command will fail due to the lack of a METADATA dir,

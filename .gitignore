@@ -3,6 +3,6 @@
 *.jl.mem
 deps/deps.jl
 /.idea/
-TODO.md
+TODO.MD
 deps/ephemera/
 **/.ipynb_checkpoints/
