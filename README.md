@@ -15,11 +15,11 @@ This is achieved, in part, through reckless disfigurement and subversion of such
 ## _What's in it for you?..._
 ... not much, I'm afraid. But you are welcome to take as you like, all the same!
 
------------------------------
 
-<b id="f1">1</b> The synopsis from the [full article](http://www.biography.com/people/caligula-9235253) at Biogrpahy.com:
-> Gaius Caesar, nicknamed Caligula or "Little Boot," was born on August 31, in 12 A.D. He succeeded Tiberius as Roman emperor in 37 A.D., and adopted the name Gaius Caesar Germanicus. Records depict him as a cruel and unpredictable leader.[↩](#a1)
+#### Notes
+<b id="f1"><sup>[1]</sup></b> The synopsis from the [full article](http://www.biography.com/people/caligula-9235253) at Biogrpahy.com:
+> <sup><sub>Gaius Caesar, nicknamed Caligula or "Little Boot," was born on August 31, in 12 A.D. He succeeded Tiberius as Roman emperor in 37 A.D., and adopted the name Gaius Caesar Germanicus. Records depict him as a cruel and unpredictable leader.[↩](#a1)</sup></sub>
 
------------------------------
+
 
 [![Build Status](https://travis-ci.org/lilinjn/LilBootstrap.jl.svg?branch=master)](https://travis-ci.org/lilinjn/LilBootstrap.jl)
