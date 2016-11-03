@@ -5,7 +5,7 @@ _Nepotic, despotic lunatics of homeric proportions got nuttin' on me..._
 
 We all have our inner [Caligulas](https://www.google.com/search?q=caligula+little+boots); this repo lays mine bare.
 
-Enter to find unbridled meglomania, which, thanks to the mass reprogramming _DJT_™ has inflicted on our collective souls, seems to be all the rage.
+Enter to find unbridled meglomania, which, thanks to the mass reprogramming DJT™ has inflicted on our collective souls, seems to be all the rage.
 
 ## _No, but really, what is this_?
 Circa Nov.2016, the [Julia](http://julialang.org/) Package Manager makes my blood boil.  This repo aims to provide a (potentially broke and overly baroque) mechanism to safeguard against the bitrot of my creations(...to come; currently they only exist as `.figments` in my lil' ol' noggin')
