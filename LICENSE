@@ -1,21 +1,15 @@
-MIT License
+The LilBootstrap.jl repo is licensed under the "Lil Hippy Dippy Skippy License":
 
-Copyright (c) 2016 Nehal Patel
+> The contents of this repo are provided to you for Free, as in "spirit", as well as in "beer," and in
+> "speech," (but mostly "spirit!")  Treat its contents as yours; you are hereby (un)licensed
+> to thrill, rock the kasbah, and put a ram in a rama lama ding dong.  For those that require
+> more clarity: Sweet thang, I ain't got none.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+> I take full responsibility for the consequences of my actions on this tiny planet.  Should my being
+> cause yours distress, please do be in touch, or, should you be blessed with the right to petition
+> for the redress of grievances, litigation might be another option -- these days, anything goes...
+> Cheers,
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Nehal Patel
+Northshore, Boston, MA
+circa 2016
