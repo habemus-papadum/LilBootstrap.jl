@@ -3,7 +3,7 @@ _Nepotic, despotic lunatics of homeric proportions got nuttin' on me..._
 
 ##
 
-We all have our inner Caligulas<sup id="a1">[1](#f1)</sup>; this repo lays mine bare.
+We all have our inner Caligulas[<sup id="a1">[[1]](#f1)</sup>]; this repo lays mine bare.
 
 Enter to find unbridled meglomania, which, thanks to the mass reprogramming DJT™ has inflicted on our collective souls, seems to be all the rage.
 
