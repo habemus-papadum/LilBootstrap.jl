@@ -20,5 +20,4 @@ PREBOOT="$DIR/deps/ephemera/preboot/.julia"
 ## Find julia
 julia="julia" # for now
 
-JULIA_PKGDIR=$PREBOOT $julia -i --load=$DIR/liljuliaboot.jl --startup-file=no
-
+JULIA_PKGDIR=$PREBOOT $julia -i --load=$DIR/liljuliaboot.jl --startup-file=no $@

@@ -40,5 +40,8 @@ it work with my personal fork of SHA.jl (by the same uathor).  Todo: should let 
 but the current code is a little ugly
 -------------------
 
-
-
+--------------------
+iTerm2/REPLSparkle Packages
+Source: https://github.com/Keno/ReplExtensions.jl
+Original code needed significant love and attention.  Also, want to change the semantics, add features, etc
+--------------------
