@@ -6,7 +6,7 @@ Provides iterm2 detection, a iterm2 display which provides support for images,
 prompt support
 """
 module iTerm2
-
+using PackagePrelude
 using Compat
 
 import Base: display

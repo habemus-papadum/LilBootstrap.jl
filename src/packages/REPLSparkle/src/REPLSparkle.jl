@@ -3,6 +3,7 @@ __precompile__()
 and capabilities of the underlying tty
 """
 module REPLSparkle
+using PackagePrelude
 using iTerm2
 
 
