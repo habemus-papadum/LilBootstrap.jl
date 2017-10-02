@@ -22,3 +22,8 @@ This is achieved, in part, through reckless disfigurement and subversion of such
 
 
 [![Build Status](https://travis-ci.org/habemus-papadum/LilBootstrap.jl.svg?branch=master)](https://travis-ci.org/lilinjn/LilBootstrap.jl)
+
+
+## Todo
+* Document -- forks, conda, notebooks, notebook exntensions.  
+* Functionality -- Atom, dataframes, graphing, adhoc hacking (already there? -- better understand bindeps)
